@@ -15,6 +15,7 @@ final mysql:Client dbClient = check new(
 //SELECT Code, Title, Includes, Intended_for, Color, Material, Price, Quantity
 //FROM shiro_db.items;
 
+# catalog item
 public type Item record {|
     int code?;
     string title;
@@ -24,6 +25,17 @@ public type Item record {|
     string material;    
     float price;
     int quantity;
+|};
+
+# order entry ID, Item_Code, price, amount, total, customer, card
+public type Order record {|
+    int id?;
+    int item_code;
+    float price;
+    int amount;
+    int total;
+    string customer;
+    string card;
 |};
 
 # A service representing a network-accessible API
@@ -42,5 +54,12 @@ service / on new http:Listener(9090) {
     resource function get catalog() returns Item[]|error {
         // Send a response back to the caller.
         return getAllItems();
+    }
+
+    # a resource to get all orders in the database
+    # + return - json array of orders in the database or error
+    resource function get orders() returns Order[]|error {
+        // Send a response back to the caller.
+        return getAllOrders();
     }
 }
