@@ -21,7 +21,7 @@ public type Item record {|
     int code?;
     string title;
     string includes;
-    string intendedFor;
+    string intended_for;
     string color;
     string material;    
     float price;
